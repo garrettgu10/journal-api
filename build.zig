@@ -8,7 +8,7 @@ pub fn build(b: *Builder) void {
     const exe = b.addExecutable("main", "src/main.zig");
     exe.setTarget(target);
     exe.setBuildMode(mode);
-    exe.addPackagePath("zhp", "libs/zhp/zhp.zig");
+    exe.addPackagePath("zhp", "libs/zhp/src/zhp.zig");
     exe.install();
 
     const run_cmd = exe.run();
