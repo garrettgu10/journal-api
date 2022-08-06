@@ -1,0 +1,3 @@
+[submodule "libs/zhp"]
+	path = libs/zhp
+	url = git@github.com:frmdstryr/zhp.git
