@@ -158,7 +158,6 @@ func wrapHandler(handler func(http.ResponseWriter, *http.Request) error) http.Ha
 }
 
 func (handler *Handler) registerHandlers() {
-	http.HandleFunc("/", wrapHandler(handler.hello))
 	http.HandleFunc("/create", wrapHandler(handler.createNewNote))
 	http.HandleFunc("/commit", wrapHandler(handler.commit))
 }

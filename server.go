@@ -52,5 +52,7 @@ func main() {
 	}
 	handler.registerHandlers()
 
+	http.Handle("/", http.FileServer(http.Dir("static")))
+
 	http.ListenAndServe(os.Getenv("HTTP_LISTEN_PATH"), nil)
 }
