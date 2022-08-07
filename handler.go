@@ -11,6 +11,7 @@ import (
 
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing/object"
+	gitHttp "github.com/go-git/go-git/v5/plumbing/transport/http"
 )
 
 type Handler struct {
@@ -52,6 +53,10 @@ func (handler *Handler) createNewNote(w http.ResponseWriter, r *http.Request) er
 	//pull latest changes from remote
 	err = handler.Worktree.Pull(&git.PullOptions{
 		RemoteName: "origin",
+		Auth: &gitHttp.BasicAuth{
+			Username: os.Getenv("GIT_USERNAME"),
+			Password: os.Getenv("GIT_PASSWORD"),
+		},
 	})
 	if err != nil && err.Error() != "already up-to-date" {
 		return err
@@ -127,6 +132,10 @@ func (handler *Handler) commit(w http.ResponseWriter, r *http.Request) error {
 	//push changes to remote
 	err = handler.Repo.Push(&git.PushOptions{
 		RemoteName: "origin",
+		Auth: &gitHttp.BasicAuth{
+			Username: os.Getenv("GIT_USERNAME"),
+			Password: os.Getenv("GIT_PASSWORD"),
+		},
 	})
 	if err != nil {
 		return err

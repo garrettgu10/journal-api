@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/go-git/go-git/v5"
+	gitHttp "github.com/go-git/go-git/v5/plumbing/transport/http"
 )
 
 func initializeRepo(localPath string, remotePath string) (*git.Repository, error) {
@@ -13,6 +14,10 @@ func initializeRepo(localPath string, remotePath string) (*git.Repository, error
 		//clone repo if it doesn't exist
 		repo, err := git.PlainClone(localPath, false, &git.CloneOptions{
 			URL: remotePath,
+			Auth: &gitHttp.BasicAuth{
+				Username: os.Getenv("GIT_USERNAME"),
+				Password: os.Getenv("GIT_PASSWORD"),
+			},
 		})
 		if err != nil {
 			return nil, err
