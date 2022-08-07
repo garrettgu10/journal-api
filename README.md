@@ -20,6 +20,9 @@ Only two features are supported:
 
 This API does not allow you to read entries, only create new ones.
 
+## Deploying App
+Make a `.env` file based on the provided `.env_example` file, and deploy the app using `./run.sh`. I also put mine behind an nginx reverse proxy so I can use HTTPS easily. 
+
 ## Building `/static`
 
 The /static directory was added for deployment convenience & it's just a copy of a build from [https://github.com/garrettgu10/journal-frontend](https://github.com/garrettgu10/journal-frontend)
