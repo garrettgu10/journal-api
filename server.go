@@ -43,6 +43,7 @@ func main() {
 		Repo:      repo,
 		Worktree:  worktree,
 		LocalPath: os.Getenv("LOCAL_GIT_JOURNAL_REPO"),
+		Password:  os.Getenv("PASSWORD"),
 	}
 	handler.registerHandlers()
 

@@ -17,6 +17,7 @@ type Handler struct {
 	Repo      *git.Repository
 	Worktree  *git.Worktree
 	LocalPath string
+	Password  string
 }
 
 func (handler *Handler) hello(w http.ResponseWriter, r *http.Request) error {
@@ -29,21 +30,29 @@ type createNewNoteRequest struct {
 	Year     int    `json:"year"`
 	Month    int    `json:"month"`
 	Day      int    `json:"day"`
+	Password string `json:"password"`
 }
 
 func (handler *Handler) createNewNote(w http.ResponseWriter, r *http.Request) error {
 	//parse json request body
 	var newNote createNewNoteRequest
 	err := json.NewDecoder(r.Body).Decode(&newNote)
-
 	if err != nil {
 		return err
+	}
+
+	//check password
+	if newNote.Password != handler.Password {
+		return fmt.Errorf("invalid password")
 	}
 
 	//pull latest changes from remote
 	err = handler.Worktree.Pull(&git.PullOptions{
 		RemoteName: "origin",
 	})
+	if err != nil {
+		return err
+	}
 
 	var folderPath = filepath.Join(handler.LocalPath,
 		strconv.Itoa(newNote.Year),
