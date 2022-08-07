@@ -53,7 +53,7 @@ func (handler *Handler) createNewNote(w http.ResponseWriter, r *http.Request) er
 	err = handler.Worktree.Pull(&git.PullOptions{
 		RemoteName: "origin",
 	})
-	if err != nil {
+	if err != nil && err.Error() != "already up-to-date" {
 		return err
 	}
 
@@ -95,7 +95,7 @@ func (handler *Handler) createNewNote(w http.ResponseWriter, r *http.Request) er
 
 	//return "OK"
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("OK"))
+	w.Write([]byte(fmt.Sprintf("Wrote journal entry for day %d-%02d-%02d", newNote.Year, newNote.Month, newNote.Day)))
 
 	return nil
 }
@@ -115,7 +115,7 @@ func (handler *Handler) commit(w http.ResponseWriter, r *http.Request) error {
 	_, err = handler.Worktree.Commit("Add new changes to journal", &git.CommitOptions{
 		Author: &object.Signature{
 			Name:  "Git Journal API",
-			Email: "none@ggu.systems",
+			Email: "donotemail@ggu.systems",
 			When:  time.Now(),
 		},
 	})
@@ -133,7 +133,7 @@ func (handler *Handler) commit(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("OK"))
+	w.Write([]byte("Committed changes to remote"))
 
 	return nil
 }
