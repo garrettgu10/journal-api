@@ -120,7 +120,7 @@ func (handler *Handler) commit(w http.ResponseWriter, r *http.Request) error {
 	_, err = handler.Worktree.Commit("Add new changes to journal", &git.CommitOptions{
 		Author: &object.Signature{
 			Name:  "Git Journal API",
-			Email: "donotemail@ggu.systems",
+			Email: "garrettgu777@gmail.com",
 			When:  time.Now(),
 		},
 	})
