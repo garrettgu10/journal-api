@@ -19,3 +19,14 @@ Only two features are supported:
 - Commit changes -- this adds all pending changes to the git repository and pushes the changes. 
 
 This API does not allow you to read entries, only create new ones.
+
+## Building `/static`
+
+The /static directory was added for deployment convenience & it's just a copy of a build from [https://github.com/garrettgu10/journal-frontend](https://github.com/garrettgu10/journal-frontend)
+
+You can update it by doing the following: (assuming journal-frontend and journal-api are under the same directory)
+```
+cd journal-frontend
+npm run-script build
+mv build ../journal-api/static
+```
