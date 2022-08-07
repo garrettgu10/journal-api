@@ -34,6 +34,9 @@ type createNewNoteRequest struct {
 }
 
 func (handler *Handler) createNewNote(w http.ResponseWriter, r *http.Request) error {
+	//set cors policy
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
 	//parse json request body
 	var newNote createNewNoteRequest
 	err := json.NewDecoder(r.Body).Decode(&newNote)
@@ -98,6 +101,9 @@ func (handler *Handler) createNewNote(w http.ResponseWriter, r *http.Request) er
 }
 
 func (handler *Handler) commit(w http.ResponseWriter, r *http.Request) error {
+	//set cors policy
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+
 	//add all changes to staging area
 	err := handler.Worktree.AddWithOptions(&git.AddOptions{
 		All: true,
